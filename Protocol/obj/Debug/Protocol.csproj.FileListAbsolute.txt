@@ -1,0 +1,16 @@
+G:\Homework\Server\DarkGodServer\Protocol\bin\Debug\Protocol.dll
+G:\Homework\Server\DarkGodServer\Protocol\bin\Debug\Protocol.pdb
+G:\Homework\Server\DarkGodServer\Protocol\bin\Debug\PESocket.dll
+G:\Homework\Server\DarkGodServer\Protocol\obj\Debug\Protocol.csprojAssemblyReference.cache
+G:\Homework\Server\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CoreCompileInputs.cache
+G:\Homework\Server\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CopyComplete
+G:\Homework\Server\DarkGodServer\Protocol\obj\Debug\Protocol.dll
+G:\Homework\Server\DarkGodServer\Protocol\obj\Debug\Protocol.pdb
+G:\Homework\DarkGodServer\Protocol\bin\Debug\Protocol.dll
+G:\Homework\DarkGodServer\Protocol\bin\Debug\Protocol.pdb
+G:\Homework\DarkGodServer\Protocol\bin\Debug\PESocket.dll
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.csprojAssemblyReference.cache
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CoreCompileInputs.cache
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CopyComplete
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.dll
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.pdb
