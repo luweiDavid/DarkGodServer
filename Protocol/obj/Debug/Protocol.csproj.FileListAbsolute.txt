@@ -17,3 +17,9 @@ G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.dll
 G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.pdb
 G:\Homework\DarkGodServer\Libs\Protocol.dll
 G:\Homework\DarkGodServer\Libs\Protocol.pdb
+E:\UnityPorjects\DarkGod\Assets\Plugins\Protocol.dll
+E:\UnityPorjects\DarkGod\Assets\Plugins\Protocol.pdb
+E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CoreCompileInputs.cache
+E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CopyComplete
+E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.dll
+E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.pdb

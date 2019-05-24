@@ -24,8 +24,8 @@ namespace Protocol
 
     [Serializable]
     public enum ErrorCode {
-        None = -1,
-        AlreadyOnline = 0,
+        None = 0,
+        AlreadyOnline = 1,
         InvalidPassword,
 
     }

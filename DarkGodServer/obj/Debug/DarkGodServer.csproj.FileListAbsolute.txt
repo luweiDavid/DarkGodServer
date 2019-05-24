@@ -20,3 +20,14 @@ G:\Homework\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.CoreCompi
 G:\Homework\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.CopyComplete
 G:\Homework\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.exe
 G:\Homework\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.pdb
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\DarkGodServer.exe.config
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\DarkGodServer.exe
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\DarkGodServer.pdb
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\PESocket.dll
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\Protocol.dll
+E:\UnityPorjects\DarkGodServer\DarkGodServer\bin\Debug\Protocol.pdb
+E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csprojAssemblyReference.cache
+E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.CoreCompileInputs.cache
+E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.CopyComplete
+E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.exe
+E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.pdb
