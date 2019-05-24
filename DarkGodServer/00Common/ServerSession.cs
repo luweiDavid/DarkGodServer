@@ -12,16 +12,32 @@ public class ServerSession : PESession<NetMsg>
 {
     protected override void OnConnected()
     {
-        base.OnConnected();
+        PECommonTool.Log("New Client Connected");
+    }
+
+   
+    protected override void OnReciveMsg(NetMsg msg)
+    {
+        //受到消息时，打包给网络服务层处理
+        string str = ((MsgType)msg.cmd).ToString();
+        PECommonTool.Log(str);
+        NetSvc.Instance.AddMsgPack(new MsgPack(this, msg));
     }
 
     protected override void OnDisConnected()
-    {
-        base.OnDisConnected();
+    { 
+
     }
 
-    protected override void OnReciveMsg(NetMsg msg)
-    {
-        base.OnReciveMsg(msg);
+
+
+}
+
+public class MsgPack {
+    public ServerSession session;
+    public NetMsg msg;
+    public MsgPack(ServerSession s, NetMsg m) {
+        session = s;
+        msg = m;
     }
 }

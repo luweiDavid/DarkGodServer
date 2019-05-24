@@ -25,7 +25,12 @@ public class ServerRoot
     {
         NetSvc.Instance.Init();
         LoginSys.Instance.Init();
+        CacheSvc.Instance.Init();
 
+    }
+
+    public void Update() {
+        NetSvc.Instance.Update();
     }
 
 }

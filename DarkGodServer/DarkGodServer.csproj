@@ -36,10 +36,11 @@
     <Compile Include="00Common\ServerRoot.cs" />
     <Compile Include="00Common\ServerSession.cs" />
     <Compile Include="00Common\ServerStart.cs" />
-    <Compile Include="01NetSvc\CfgSvc.cs" />
-    <Compile Include="01NetSvc\NetSvc.cs" />
-    <Compile Include="01NetSvc\TimerSvc.cs" />
+    <Compile Include="01Svc\CfgSvc.cs" />
+    <Compile Include="01Svc\NetSvc.cs" />
+    <Compile Include="01Svc\TimerSvc.cs" />
     <Compile Include="02System\LoginSys.cs" />
+    <Compile Include="03Cache\CacheSvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\PESocket.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

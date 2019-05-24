@@ -11,6 +11,9 @@ class ServerStart
     {
         ServerRoot.Instance.Init();
 
-        while (true) { }
+        while (true) {
+            ServerRoot.Instance.Update();
+
+        }
     }
 }
