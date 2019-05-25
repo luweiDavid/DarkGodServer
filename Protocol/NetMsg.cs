@@ -21,6 +21,8 @@ namespace Protocol
     {
         public ReqLogin ReqLogin;
         public RspLogin RspLogin;
+        public ReqRename ReqRename;
+        public RspRename RspRename;
 
     }
 
@@ -35,7 +37,15 @@ namespace Protocol
         public PlayerData data;
     }
 
+    [Serializable]
+    public class ReqRename {
+        public string name;
+    }
 
+    [Serializable]
+    public class RspRename {
+        public string name;
+    }
 
 
     public class ServerCfg {

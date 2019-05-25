@@ -29,7 +29,7 @@ public class LoginSys
         PETool.LogMsg("LoginSys Init Done");
     }
 
-    public void HandleMsgPack(MsgPack pack) {
+    public void HandleReqLogin(MsgPack pack) {
         //处理客户端登陆请求
         NetMsg newMsg = new NetMsg
         {
@@ -62,6 +62,41 @@ public class LoginSys
             }
         }
         pack.session.SendMsg(newMsg); 
+    }
+
+    /// <summary>
+    /// 处理修改名字请求
+    /// </summary> 
+    public void HandleReqRename(MsgPack pack) {
+        ReqRename reqData = pack.msg.ReqRename;
+        NetMsg newMsg = new NetMsg
+        {
+            cmd = (int)MsgType.RspRename,
+        };
+
+        //检查名字是否已经存在
+        bool check = CacheSvc.Instance.CheckName(reqData.name);
+        if (check)
+        {
+            newMsg.err = (int)ErrorCode.NameExisted;
+        }
+        else {
+            PlayerData data = CacheSvc.Instance.GetPlayerDataBySession(pack.session);
+            data.Name = reqData.name;
+
+            //更新到数据库 todo
+            if (CacheSvc.Instance.UpdatePlayerDataToDB(data.ID, data))
+            {
+                newMsg.RspRename = new RspRename
+                {
+                    name=reqData.name,
+                };
+            }
+            else {
+                newMsg.err = (int)ErrorCode.UpdateDBFailed;
+            }
+        }
+        pack.session.SendMsg(newMsg);
     }
 
 }

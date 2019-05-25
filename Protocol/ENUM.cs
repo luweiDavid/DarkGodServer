@@ -20,6 +20,8 @@ namespace Protocol
 
         ReqLogin = 101,
         RspLogin = 102,
+        ReqRename = 103,
+        RspRename = 104,
     }
 
     [Serializable]
@@ -27,6 +29,8 @@ namespace Protocol
         None = 0,
         AlreadyOnline = 1,
         InvalidPassword,
+        NameExisted,
+        UpdateDBFailed,
 
     }
 

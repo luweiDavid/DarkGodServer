@@ -62,9 +62,10 @@ public class NetSvc
             case MsgType.None:
                 break;
             case MsgType.ReqLogin:
-                LoginSys.Instance.HandleMsgPack(pack);
+                LoginSys.Instance.HandleReqLogin(pack);
                 break;
-            case MsgType.RspLogin:
+            case MsgType.ReqRename:
+                LoginSys.Instance.HandleReqRename(pack);
                 break;
             default:
                 break;

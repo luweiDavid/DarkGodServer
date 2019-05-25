@@ -31,3 +31,4 @@ E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.Core
 E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.csproj.CopyComplete
 E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.exe
 E:\UnityPorjects\DarkGodServer\DarkGodServer\obj\Debug\DarkGodServer.pdb
+G:\Homework\DarkGodServer\DarkGodServer\bin\Debug\MySql.Data.dll

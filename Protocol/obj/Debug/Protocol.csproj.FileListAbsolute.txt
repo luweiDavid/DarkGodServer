@@ -23,3 +23,4 @@ E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CoreCompileInp
 E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.csproj.CopyComplete
 E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.dll
 E:\UnityPorjects\DarkGodServer\Protocol\obj\Debug\Protocol.pdb
+G:\Homework\DarkGodServer\Protocol\obj\Debug\Protocol.csprojAssemblyReference.cache

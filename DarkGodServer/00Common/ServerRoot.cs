@@ -26,7 +26,7 @@ public class ServerRoot
         NetSvc.Instance.Init();
         LoginSys.Instance.Init();
         CacheSvc.Instance.Init();
-
+        DBMgr.Instance.Init();
     }
 
     public void Update() {
