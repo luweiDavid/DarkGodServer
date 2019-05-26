@@ -130,8 +130,8 @@ public class DBMgr
     /// <summary>
     /// 修改数据
     /// </summary>
-    public void UpdatePlayerData() {
-
+    public void UpdatePlayerData(int id, PlayerData data) {
+        string quest = "select * from account where id=@id";
     }
 
 

@@ -81,7 +81,7 @@ public class CacheSvc
         bool updateSuc = true;
 
 
-        return true;
+        return updateSuc;
     }
 
 }
