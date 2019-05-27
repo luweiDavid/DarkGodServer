@@ -83,8 +83,7 @@ public class LoginSys
         else {
             PlayerData data = CacheSvc.Instance.GetPlayerDataBySession(pack.session);
             data.Name = reqData.name;
-
-            //更新到数据库 todo
+             
             if (CacheSvc.Instance.UpdatePlayerDataToDB(data.ID, data))
             {
                 newMsg.RspRename = new RspRename
@@ -97,6 +96,17 @@ public class LoginSys
             }
         }
         pack.session.SendMsg(newMsg);
+    }
+
+    public void Offline(ServerSession ses, int sesID) {
+        bool offlienSuc = CacheSvc.Instance.Offline(ses);
+        if (offlienSuc)
+        {
+            PECommonTool.Log("客户端下线成功: "+sesID);
+        }
+        else {
+            PECommonTool.Log("客户端下线失败: " + sesID);
+        }
     }
 
 }

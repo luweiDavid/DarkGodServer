@@ -35,7 +35,33 @@ public class CacheSvc
     /// </summary> 
     public bool IsOnline(string acct) {
         return onlineStateDic.ContainsKey(acct);
-    } 
+    }
+
+    public bool Offline(ServerSession ses) {
+        bool offlienSuc = true;
+        string key1 = "";
+        foreach (var item in onlineStateDic)
+        {
+            if (item.Value == ses) {
+                key1 = item.Key;
+            }
+        }
+        if (onlineStateDic.ContainsKey(key1))
+        {
+            onlineStateDic.Remove(key1);
+        }
+        else {
+            offlienSuc = false;
+        }
+        if (playerDataDic.ContainsKey(ses))
+        {
+            playerDataDic.Remove(ses);
+        }
+        else {
+            offlienSuc = false;
+        }
+        return offlienSuc;
+    }
 
     /// <summary>
     /// 根据账号密码获取玩家数据， 密码错误返回null， 
@@ -75,13 +101,12 @@ public class CacheSvc
     public bool CheckName(string name) {
         return DBMgr.Instance.CheckName(name);
     }
-
-
+     
     public bool UpdatePlayerDataToDB(int id, PlayerData data) {
-        bool updateSuc = true;
 
-
-        return updateSuc;
+        return DBMgr.Instance.UpdatePlayerData(id, data);
     }
+
+
 
 }

@@ -9,12 +9,22 @@ namespace Protocol
         public int ID;
         public string Name;
         public int Level;
-        public int Experience;
-        public int Power;
-        public int Coin;
-        public int Diamond;
+        public int Experience;   //经验
+        public int Power;        //体力
+        public int Coin;         //金币
+        public int Diamond;     //钻石
+        public int Hp;          //血量
+        public int Ad;          //物理攻击
+        public int Ap;          //法术攻击
+        public int Addef;       //物理防御
+        public int Apdef;       //法术防御
+        public int Dodge;       //闪避
+        public int Pierce;      //穿透
+        public int Critical;    //暴击率
+         
 
-        public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond) {
+        public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
+            int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical) {
             this.ID = id;
             this.Name = name;
             this.Level = lv;
@@ -22,6 +32,14 @@ namespace Protocol
             this.Power = power;
             this.Coin = coin;
             this.Diamond = diamond;
+            this.Hp = hp;
+            this.Ad = ad;
+            this.Ap = ap;
+            this.Addef = addef;
+            this.Apdef = apdef;
+            this.Dodge = dodge;
+            this.Pierce = pierce;
+            this.Critical = critical;
         }
 
         /// <summary>
@@ -35,6 +53,14 @@ namespace Protocol
             this.Power = 100;
             this.Coin = 1000;
             this.Diamond = 5;
+            this.Hp = 100;
+            this.Ad = 10;
+            this.Ap = 5;
+            this.Addef = 10;
+            this.Apdef = 10;
+            this.Dodge = 5;
+            this.Pierce = 5;
+            this.Critical = 1;
         }
     }
 }

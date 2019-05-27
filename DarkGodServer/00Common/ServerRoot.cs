@@ -33,4 +33,10 @@ public class ServerRoot
         NetSvc.Instance.Update();
     }
 
+
+    private int SessionID = 0;
+    public int GetSessionID() {
+        SessionID += 1;
+        return SessionID;
+    }
 }

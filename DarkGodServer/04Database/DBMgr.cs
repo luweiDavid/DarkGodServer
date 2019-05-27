@@ -26,7 +26,7 @@ public class DBMgr
     
     
     public void Init() {
-        string conStr = "server=localhost;User Id=root;password=;Database=darkgod; Charset=utf8;";
+        string conStr = "server=localhost;User Id=root;password=;Database=darkgod";
         conn = new MySqlConnection(conStr);
         try
         {
@@ -37,7 +37,10 @@ public class DBMgr
         {
             PECommonTool.Log("数据库连接失败：" + e.Message, LogType.Error);
             return;
-        } 
+        }
+
+        bool b = CheckName("回复第");
+        PECommonTool.Log(b.ToString());
     }
 
     /// <summary>
@@ -70,8 +73,17 @@ public class DBMgr
                     int power = reader.GetInt32("power");
                     int coin = reader.GetInt32("coin");
                     int diamond = reader.GetInt32("diamond");
+                    int hp = reader.GetInt32("hp");
+                    int ad = reader.GetInt32("ad");
+                    int ap = reader.GetInt32("ap");
+                    int addef = reader.GetInt32("addef");
+                    int apdef = reader.GetInt32("apdef");
+                    int dodge = reader.GetInt32("dodge");
+                    int pierce = reader.GetInt32("pierce");
+                    int critical = reader.GetInt32("critical");
 
-                    playerData = new PlayerData(id, name, level, exp, power, coin, diamond);
+                    playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
+                        hp, ad, ap, addef, apdef, dodge, pierce, critical);
                 }
                 else
                 {
@@ -81,7 +93,7 @@ public class DBMgr
         }
         catch (Exception e)
         {
-            PECommonTool.Log(e.Message, LogType.Error);
+            PECommonTool.Log("QueryPlayerData: "+e.Message, LogType.Error);
         }
         finally {
             if (reader != null) {
@@ -108,35 +120,113 @@ public class DBMgr
     /// <returns>返回主键id</returns>
     public int InsertNewAccount(string acct, string password, PlayerData data) {
         string quest = "insert into account set acct = @acct,password = @password,name = " +
-            "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond";
-        MySqlCommand cmd = new MySqlCommand(quest, conn);
-        cmd.Parameters.AddWithValue("acct", acct);
-        cmd.Parameters.AddWithValue("password", password);
-        cmd.Parameters.AddWithValue("name", data.Name);
-        cmd.Parameters.AddWithValue("level", data.Level);
-        cmd.Parameters.AddWithValue("exp", data.Experience);
-        cmd.Parameters.AddWithValue("power", data.Power);
-        cmd.Parameters.AddWithValue("coin", data.Coin);
-        cmd.Parameters.AddWithValue("diamond", data.Diamond);
-        cmd.ExecuteNonQuery();
-        int id = (int)cmd.LastInsertedId;
-        PECommonTool.Log(id.ToString(), LogType.Info);
+            "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
+            "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
+            "pierce = @pierce,critical = @critical";
+        int id = -1;
+        try
+        {
+            MySqlCommand cmd = new MySqlCommand(quest, conn);
+            cmd.Parameters.AddWithValue("acct", acct);
+            cmd.Parameters.AddWithValue("password", password);
+            cmd.Parameters.AddWithValue("name", data.Name);
+            cmd.Parameters.AddWithValue("level", data.Level);
+            cmd.Parameters.AddWithValue("exp", data.Experience);
+            cmd.Parameters.AddWithValue("power", data.Power);
+            cmd.Parameters.AddWithValue("coin", data.Coin);
+            cmd.Parameters.AddWithValue("diamond", data.Diamond);
+            cmd.Parameters.AddWithValue("hp", data.Hp);
+            cmd.Parameters.AddWithValue("ad", data.Ad);
+            cmd.Parameters.AddWithValue("ap", data.Ap);
+            cmd.Parameters.AddWithValue("addef", data.Addef);
+            cmd.Parameters.AddWithValue("apdef", data.Apdef);
+            cmd.Parameters.AddWithValue("dodge", data.Dodge);
+            cmd.Parameters.AddWithValue("pierce", data.Pierce);
+            cmd.Parameters.AddWithValue("critical", data.Critical);
+
+            cmd.ExecuteNonQuery();
+             id = (int)cmd.LastInsertedId;
+            PECommonTool.Log(id.ToString(), LogType.Info);
+        }
+        catch (Exception e)
+        {
+            PECommonTool.Log("InsertNewAccount: " + e.Message, LogType.Error);
+        } 
         return id;
-    }
-
-
+    } 
    
 
     /// <summary>
     /// 修改数据
     /// </summary>
-    public void UpdatePlayerData(int id, PlayerData data) {
-        string quest = "select * from account where id=@id";
+    public bool UpdatePlayerData(int id, PlayerData data) {
+        bool updateSuc = true; 
+
+        string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
+            "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
+            "pierce = @pierce,critical = @critical where id=@id ";
+
+        try
+        {
+            MySqlCommand cmd = new MySqlCommand(quest, conn);
+            cmd.Parameters.AddWithValue("id", id);
+            cmd.Parameters.AddWithValue("name", data.Name);
+            cmd.Parameters.AddWithValue("level", data.Level);
+            cmd.Parameters.AddWithValue("exp", data.Experience);
+            cmd.Parameters.AddWithValue("power", data.Power);
+            cmd.Parameters.AddWithValue("coin", data.Coin);
+            cmd.Parameters.AddWithValue("diamond", data.Diamond);
+            cmd.Parameters.AddWithValue("hp", data.Hp);
+            cmd.Parameters.AddWithValue("ad", data.Ad);
+            cmd.Parameters.AddWithValue("ap", data.Ap);
+            cmd.Parameters.AddWithValue("addef", data.Addef);
+            cmd.Parameters.AddWithValue("apdef", data.Apdef);
+            cmd.Parameters.AddWithValue("dodge", data.Dodge);
+            cmd.Parameters.AddWithValue("pierce", data.Pierce);
+            cmd.Parameters.AddWithValue("critical", data.Critical);
+
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            updateSuc = false;
+            PECommonTool.Log("UpdatePlayerData: " + e.Message, LogType.Error);
+        }
+        return updateSuc;
     }
 
 
+
+    /// <summary>
+    /// 由于编码问题，不能判断中文名称
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public bool CheckName(string name) {
         bool isExist = false;
+        MySqlDataReader reader = null;
+        string quest = "select * from account";
+        try
+        {
+            MySqlCommand cmd = new MySqlCommand(quest, conn); 
+            reader = cmd.ExecuteReader();   
+            while (reader.Read())
+            {
+                string tmp = reader.GetString("name");  
+                if (string.Equals(tmp, name)) {
+                    isExist = true;
+                } 
+            }
+        }
+        catch (Exception e)
+        {
+            PECommonTool.Log("CheckName: " + e.Message, LogType.Error);
+        }
+        finally {
+            if (reader != null) {
+                reader.Close();
+            }
+        }  
 
         return isExist;
     }

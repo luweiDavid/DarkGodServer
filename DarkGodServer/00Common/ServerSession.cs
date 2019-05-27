@@ -10,11 +10,14 @@ using Protocol;
 
 public class ServerSession : PESession<NetMsg>
 {
+
+    private int SessionID = 0;
+
     protected override void OnConnected()
     {
         PECommonTool.Log("New Client Connected");
+        SessionID = ServerRoot.Instance.GetSessionID();
     }
-
    
     protected override void OnReciveMsg(NetMsg msg)
     {
@@ -25,12 +28,9 @@ public class ServerSession : PESession<NetMsg>
     }
 
     protected override void OnDisConnected()
-    { 
-
-    }
-
-
-
+    {
+        LoginSys.Instance.Offline(this, SessionID);
+    }  
 }
 
 public class MsgPack {
