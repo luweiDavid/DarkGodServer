@@ -7,8 +7,11 @@
 *****************************************************/
 
 
-public class TimerSvc
+public class TimerSvc:ServiceRoot<TimerSvc>
 {
 
-
+    public override void Init()
+    {
+        base.Init();
+    }
 }

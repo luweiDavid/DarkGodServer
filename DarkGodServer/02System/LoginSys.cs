@@ -10,22 +10,9 @@
 using PENet;
 using Protocol;
 
-public class LoginSys
-{
-    private static LoginSys instance;
-    public static LoginSys Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new LoginSys();
-            }
-            return instance;
-        }
-    }
-
-    public void Init() {
+public class LoginSys:SystemRoot<LoginSys>
+{ 
+    public override void Init() {
         PETool.LogMsg("LoginSys Init Done");
     }
 

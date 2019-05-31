@@ -23,10 +23,21 @@ public class ServerRoot
 
     public void Init()
     {
-        NetSvc.Instance.Init();
-        LoginSys.Instance.Init();
-        CacheSvc.Instance.Init();
+        //数据层
         DBMgr.Instance.Init();
+
+        //缓存层
+        CacheSvc.Instance.Init();
+
+        //服务层
+        NetSvc.Instance.Init();
+        CfgSvc.Instance.Init();
+        TimerSvc.Instance.Init();
+       
+        //业务层
+        LoginSys.Instance.Init();
+        GuideSys.Instance.Init();
+        
     }
 
     public void Update() {

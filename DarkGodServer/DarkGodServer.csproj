@@ -36,10 +36,14 @@
     <Compile Include="00Common\ServerRoot.cs" />
     <Compile Include="00Common\ServerSession.cs" />
     <Compile Include="00Common\ServerStart.cs" />
+    <Compile Include="01Svc\BaseCfgData.cs" />
     <Compile Include="01Svc\CfgSvc.cs" />
     <Compile Include="01Svc\NetSvc.cs" />
+    <Compile Include="01Svc\ServiceRoot.cs" />
     <Compile Include="01Svc\TimerSvc.cs" />
+    <Compile Include="02System\GuideSys.cs" />
     <Compile Include="02System\LoginSys.cs" />
+    <Compile Include="02System\SystemRoot.cs" />
     <Compile Include="03Cache\CacheSvc.cs" />
     <Compile Include="04Database\DBMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +67,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

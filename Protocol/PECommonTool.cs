@@ -39,4 +39,32 @@ public class PECommonTool
     public static int GetExpUpvalue(int lv) {
         return 100 * lv * lv;
     }
+
+    /// <summary>
+    /// 增加经验（同时判断是否可以升级）
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="exp"></param>
+    public static void AddExp(ref PlayerData data, int exp) {
+        int curExp = data.Experience;
+        int curLv = data.Level;
+        int totalAddExp = exp;
+
+        while (true)
+        {
+            int upLvNeedExp = GetExpUpvalue(curLv) - curExp;
+            if (totalAddExp >= upLvNeedExp)
+            {
+                curLv += 1;
+                curExp = 0;
+                totalAddExp -= upLvNeedExp;
+            }
+            else {
+                data.Level = curLv;
+                data.Experience += totalAddExp;
+                break;
+            }
+        }
+    }
+
 }

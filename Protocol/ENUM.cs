@@ -22,6 +22,10 @@ namespace Protocol
         RspLogin = 102,
         ReqRename = 103,
         RspRename = 104,
+
+
+        ReqGuide = 200,
+        RspGuide = 201,
     }
 
     [Serializable]
@@ -32,6 +36,7 @@ namespace Protocol
         NameExisted,
         UpdateDBFailed,
 
+        ServerDataError,
     }
 
 }

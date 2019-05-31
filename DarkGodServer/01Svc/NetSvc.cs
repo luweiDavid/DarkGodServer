@@ -13,27 +13,13 @@ using PENet;
 using Protocol;
 using System.Collections.Generic;
 
-public class NetSvc
-{
-    private static NetSvc instance;
-    public static NetSvc Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new NetSvc();
-            }
-            return instance;
-        }
-    }
-    PESocket<ServerSession, NetMsg> socket = null;
-
-
+public class NetSvc:ServiceRoot<NetSvc>
+{ 
+    PESocket<ServerSession, NetMsg> socket = null; 
     private Queue<MsgPack> packQueue = new Queue<MsgPack>();
 
 
-    public void Init() {
+    public override void Init() {
         socket = new PESocket<ServerSession, NetMsg>();
         socket.StartAsServer(ServerCfg.IP,ServerCfg.Port);
 
@@ -66,6 +52,9 @@ public class NetSvc
                 break;
             case MsgType.ReqRename:
                 LoginSys.Instance.HandleReqRename(pack);
+                break;
+            case MsgType.ReqGuide:
+                GuideSys.Instance.HandleReqGuide(pack);
                 break;
             default:
                 break;
