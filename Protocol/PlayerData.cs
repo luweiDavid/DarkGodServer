@@ -21,10 +21,12 @@ namespace Protocol
         public int Dodge;       //闪避
         public int Pierce;      //穿透
         public int Critical;    //暴击率
+        public int GuideID;    //引导id
          
 
         public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
-            int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical) {
+            int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical,
+            int guideid) {
             this.ID = id;
             this.Name = name;
             this.Level = lv;
@@ -40,6 +42,7 @@ namespace Protocol
             this.Dodge = dodge;
             this.Pierce = pierce;
             this.Critical = critical;
+            this.GuideID = guideid;
         }
 
         /// <summary>
@@ -61,6 +64,7 @@ namespace Protocol
             this.Dodge = 5;
             this.Pierce = 5;
             this.Critical = 1;
+            this.GuideID = 1001;
         }
     }
 }

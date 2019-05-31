@@ -81,9 +81,10 @@ public class DBMgr
                     int dodge = reader.GetInt32("dodge");
                     int pierce = reader.GetInt32("pierce");
                     int critical = reader.GetInt32("critical");
+                    int guideid = reader.GetInt32("guideid");
 
                     playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
-                        hp, ad, ap, addef, apdef, dodge, pierce, critical);
+                        hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid);
                 }
                 else
                 {
@@ -122,7 +123,7 @@ public class DBMgr
         string quest = "insert into account set acct = @acct,password = @password,name = " +
             "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
-            "pierce = @pierce,critical = @critical";
+            "pierce = @pierce,critical = @critical, guideid=@guideid";
         int id = -1;
         try
         {
@@ -143,6 +144,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("dodge", data.Dodge);
             cmd.Parameters.AddWithValue("pierce", data.Pierce);
             cmd.Parameters.AddWithValue("critical", data.Critical);
+            cmd.Parameters.AddWithValue("guideid", data.GuideID);
 
             cmd.ExecuteNonQuery();
              id = (int)cmd.LastInsertedId;
@@ -164,7 +166,7 @@ public class DBMgr
 
         string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
-            "pierce = @pierce,critical = @critical where id=@id ";
+            "pierce = @pierce,critical = @critical, guideid=@guideid where id=@id ";
 
         try
         {
@@ -184,6 +186,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("dodge", data.Dodge);
             cmd.Parameters.AddWithValue("pierce", data.Pierce);
             cmd.Parameters.AddWithValue("critical", data.Critical);
+            cmd.Parameters.AddWithValue("guideid", data.GuideID);
 
             cmd.ExecuteNonQuery();
         }
@@ -198,7 +201,7 @@ public class DBMgr
 
 
     /// <summary>
-    /// 由于编码问题，不能判断中文名称
+    /// 由于编码问题，不能判断中文名称+
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
