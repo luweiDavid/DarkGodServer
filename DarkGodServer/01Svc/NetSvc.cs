@@ -55,6 +55,9 @@ public class NetSvc:ServiceRoot<NetSvc>
                 break;
             case MsgType.ReqGuide:
                 GuideSys.Instance.HandleReqGuide(pack);
+                break; 
+            case MsgType.ReqStrong:
+                StrongSys.Instance.HandleReqStrong(pack);
                 break;
             default:
                 break;

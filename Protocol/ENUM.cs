@@ -21,11 +21,12 @@ namespace Protocol
         ReqLogin = 101,
         RspLogin = 102,
         ReqRename = 103,
-        RspRename = 104,
-
-
+        RspRename = 104, 
         ReqGuide = 200,
         RspGuide = 201,
+
+        ReqStrong=202,
+        RspStrong=203,
     }
 
     [Serializable]
@@ -34,9 +35,12 @@ namespace Protocol
         AlreadyOnline = 1,
         InvalidPassword,
         NameExisted,
-        UpdateDBFailed,
-
-        ServerDataError,
+        UpdateDBFailed, 
+        ServerDataError, 
+        LackLevel,
+        LackCrystal,
+        LackCoin,
+        GetCfgError,
     }
 
 }

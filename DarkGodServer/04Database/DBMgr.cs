@@ -81,10 +81,25 @@ public class DBMgr
                     int dodge = reader.GetInt32("dodge");
                     int pierce = reader.GetInt32("pierce");
                     int critical = reader.GetInt32("critical");
-                    int guideid = reader.GetInt32("guideid");
+                    int guideid = reader.GetInt32("guideid");  
+                    string strongStr = reader.GetString("strong");
+                    int crystal = reader.GetInt32("crystal");
+
+
+                    #region  读取拼接的强化数据
+                    string[] tmp = strongStr.Split('#');
+                    int[] strong = new int[6];
+                    for (int i = 0; i < tmp.Length; i++)
+                    {
+                        if (string.IsNullOrEmpty(tmp[i])) {
+                            continue;
+                        }
+                        strong[i] = int.Parse(tmp[i]);
+                    }
+                    #endregion
 
                     playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
-                        hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid);
+                        hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid, strong, crystal);
                 }
                 else
                 {
@@ -123,7 +138,8 @@ public class DBMgr
         string quest = "insert into account set acct = @acct,password = @password,name = " +
             "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
-            "pierce = @pierce,critical = @critical, guideid=@guideid";
+            "pierce = @pierce,critical = @critical, guideid = @guideid, strong = @strong," +
+            "crystal = @crystal";
         int id = -1;
         try
         {
@@ -144,7 +160,10 @@ public class DBMgr
             cmd.Parameters.AddWithValue("dodge", data.Dodge);
             cmd.Parameters.AddWithValue("pierce", data.Pierce);
             cmd.Parameters.AddWithValue("critical", data.Critical);
-            cmd.Parameters.AddWithValue("guideid", data.GuideID);
+            cmd.Parameters.AddWithValue("guideid", data.GuideID);  
+            string str = PECommonTool.GetJointString(data.Strong, '#');
+            cmd.Parameters.AddWithValue("strong", str); 
+            cmd.Parameters.AddWithValue("crystal", data.Crystal);
 
             cmd.ExecuteNonQuery();
              id = (int)cmd.LastInsertedId;
@@ -155,7 +174,9 @@ public class DBMgr
             PECommonTool.Log("InsertNewAccount: " + e.Message, LogType.Error);
         } 
         return id;
-    } 
+    }
+
+   
    
 
     /// <summary>
@@ -166,7 +187,8 @@ public class DBMgr
 
         string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
-            "pierce = @pierce,critical = @critical, guideid=@guideid where id=@id ";
+            "pierce = @pierce,critical = @critical, guideid = @guideid,strong = @strong," +
+            "crystal = @crystal where id=@id ";
 
         try
         {
@@ -187,6 +209,9 @@ public class DBMgr
             cmd.Parameters.AddWithValue("pierce", data.Pierce);
             cmd.Parameters.AddWithValue("critical", data.Critical);
             cmd.Parameters.AddWithValue("guideid", data.GuideID);
+            string str = PECommonTool.GetJointString(data.Strong, '#');
+            cmd.Parameters.AddWithValue("strong", str);
+            cmd.Parameters.AddWithValue("crystal", data.Crystal);
 
             cmd.ExecuteNonQuery();
         }

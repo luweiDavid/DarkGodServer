@@ -22,11 +22,13 @@ namespace Protocol
         public int Pierce;      //穿透
         public int Critical;    //暴击率
         public int GuideID;    //引导id
+        public int[] Strong;   //强化系统配置数据
+        public int Crystal;     //水晶（可在副本获得）
          
 
         public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
             int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical,
-            int guideid) {
+            int guideid, int[] strong, int crystal) {
             this.ID = id;
             this.Name = name;
             this.Level = lv;
@@ -43,6 +45,8 @@ namespace Protocol
             this.Pierce = pierce;
             this.Critical = critical;
             this.GuideID = guideid;
+            this.Strong = strong;
+            this.Crystal = crystal;
         }
 
         /// <summary>
@@ -64,7 +68,9 @@ namespace Protocol
             this.Dodge = 5;
             this.Pierce = 5;
             this.Critical = 1;
-            this.GuideID = 1001;
+            this.GuideID = 1001; 
+            this.Strong = new int[6]; 
+            this.Crystal = 200;
         }
     }
 }

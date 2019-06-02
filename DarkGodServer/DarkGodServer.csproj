@@ -41,6 +41,7 @@
     <Compile Include="01Svc\NetSvc.cs" />
     <Compile Include="01Svc\ServiceRoot.cs" />
     <Compile Include="01Svc\TimerSvc.cs" />
+    <Compile Include="02System\StrongSys.cs" />
     <Compile Include="02System\GuideSys.cs" />
     <Compile Include="02System\LoginSys.cs" />
     <Compile Include="02System\SystemRoot.cs" />

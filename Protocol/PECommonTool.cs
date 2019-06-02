@@ -67,4 +67,22 @@ public class PECommonTool
         }
     }
 
+
+
+    public static string GetJointString(int[] strArr, char _char)
+    {
+        string str = "";
+        for (int i = 0; i < strArr.Length; i++)
+        { 
+            str += strArr[i];
+            if (i < strArr.Length - 1)
+            {
+                str += _char;
+            }
+        }
+        return str;
+    }
+
+
+
 }

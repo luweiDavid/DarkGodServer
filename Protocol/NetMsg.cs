@@ -15,19 +15,33 @@ using System;
 
 namespace Protocol
 {
-   
-    [Serializable] 
-    public class NetMsg:PEMsg
+
+    [Serializable]
+    public class NetMsg : PEMsg
     {
         public ReqLogin ReqLogin;
         public RspLogin RspLogin;
         public ReqRename ReqRename;
-        public RspRename RspRename;
-
+        public RspRename RspRename; 
         public ReqGuide ReqGuide;
         public RspGuide RspGuide;
 
+        public ReqStrong ReqStrong;
+        public RspStrong RspStrong;
+
     }
+    #region strong
+    [Serializable]
+    public class ReqStrong {
+        public int pos;
+    }
+
+    [Serializable]
+    public class RspStrong {
+        public PlayerData data;
+    }
+
+    #endregion
 
     #region  guidesys
     [Serializable]
@@ -46,10 +60,7 @@ namespace Protocol
         public PlayerData data;
     }
     #endregion
-
-
-
-
+     
     #region  loginsys
     [Serializable]
     public class ReqLogin {
