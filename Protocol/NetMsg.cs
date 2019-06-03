@@ -24,12 +24,42 @@ namespace Protocol
         public ReqRename ReqRename;
         public RspRename RspRename; 
         public ReqGuide ReqGuide;
-        public RspGuide RspGuide;
-
+        public RspGuide RspGuide; 
         public ReqStrong ReqStrong;
-        public RspStrong RspStrong;
+        public RspStrong RspStrong;  
+        public SendChatMsg SendChatMsg;
+        public PushChatMsg PushChatMsg;
 
+        public ReqBuy ReqBuy; 
+        public RspBuy RspBuy;
     }
+    #region buy
+    [Serializable]
+    public class ReqBuy {
+        public int buyType;
+    }
+    [Serializable]
+    public class RspBuy
+    {
+        public int buyType;
+        public PlayerData data;
+    }
+
+    #endregion
+
+    #region chat
+    [Serializable]
+    public class SendChatMsg {
+        public string str;
+    }
+
+    [Serializable]
+    public class PushChatMsg {
+        public string name;
+        public string str;
+    }
+    #endregion
+
     #region strong
     [Serializable]
     public class ReqStrong {

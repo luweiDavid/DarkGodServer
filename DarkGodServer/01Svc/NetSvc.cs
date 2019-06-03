@@ -59,7 +59,11 @@ public class NetSvc:ServiceRoot<NetSvc>
             case MsgType.ReqStrong:
                 StrongSys.Instance.HandleReqStrong(pack);
                 break;
-            default:
+            case MsgType.SendChatMsg:
+                ChatSys.Instance.HandleSendChatMsg(pack);
+                break;
+            case MsgType.ReqBuy:
+                CommonBuySys.Instance.HandleReqBuy(pack);
                 break;
         }
     } 

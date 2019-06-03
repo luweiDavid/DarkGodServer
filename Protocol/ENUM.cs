@@ -27,6 +27,12 @@ namespace Protocol
 
         ReqStrong=202,
         RspStrong=203,
+
+        SendChatMsg = 204,
+        PushChatMsg = 205,
+
+        ReqBuy = 206,
+        RspBuy = 207,
     }
 
     [Serializable]
@@ -40,7 +46,14 @@ namespace Protocol
         LackLevel,
         LackCrystal,
         LackCoin,
+        LackDiamond,
         GetCfgError,
+    }
+
+    public enum CommonBuyType
+    {
+        Coin,
+        Power,
     }
 
 }

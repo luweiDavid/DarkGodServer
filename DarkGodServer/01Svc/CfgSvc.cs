@@ -41,7 +41,7 @@ public class CfgSvc : ServiceRoot<CfgSvc>
         XmlDocument xmlDoc = new XmlDocument();
         string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\strong.xml";
         string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\strong.xml";
-        xmlDoc.Load(inHomeStr);
+        xmlDoc.Load(inHaoXinStr);
 
         XmlNodeList nodeList = xmlDoc.SelectSingleNode("root").ChildNodes;
         Dictionary<int, CfgStrongData> dataDic = null;
@@ -120,7 +120,7 @@ public class CfgSvc : ServiceRoot<CfgSvc>
         string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\guide.xml";
         string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\guide.xml";
          
-        xmlDoc.Load(inHomeStr);
+        xmlDoc.Load(inHaoXinStr);
 
         XmlNodeList nodeList = xmlDoc.SelectSingleNode("root").ChildNodes;
 

@@ -95,6 +95,15 @@ public class CacheSvc
         return data;
     }
 
+    public List<ServerSession> GetOnlineServerSes() {
+        List<ServerSession> _list = new List<ServerSession>();
+        foreach (var key in playerDataDic.Keys)
+        {
+            _list.Add(key);
+        }
+        return _list;
+    }
+
     /// <summary>
     /// 检查数据库中是否存在名字
     /// </summary> 
