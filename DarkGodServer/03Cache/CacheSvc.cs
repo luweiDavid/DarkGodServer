@@ -10,56 +10,43 @@
 using Protocol;
 using System.Collections.Generic;
 
-public class CacheSvc
-{
-    private static CacheSvc instance;
-    public static CacheSvc Instance {
-        get {
-            if (instance == null) {
-                instance = new CacheSvc();
-            }
-            return instance;
-        }
-    }
-
+public class CacheSvc:ServiceRoot<CacheSvc>
+{  
     //key：玩家账号， 缓存所有已经上线的玩家
-    private Dictionary<string, ServerSession> onlineStateDic = new Dictionary<string, ServerSession>();
-    private Dictionary<ServerSession, PlayerData> playerDataDic = new Dictionary<ServerSession, PlayerData>();
+    private Dictionary<string, ServerSession> onlinePlayerSessionDic = new Dictionary<string, ServerSession>();
+    private Dictionary<ServerSession, PlayerData> onlinePlayerDataDic = new Dictionary<ServerSession, PlayerData>();
 
-    public void Init() {
-        PECommonTool.Log("CacheSvc Init Done");
-    } 
-
-    /// <summary>
-    /// 判断玩家是否在线
-    /// </summary> 
-    public bool IsOnline(string acct) {
-        return onlineStateDic.ContainsKey(acct);
-    }
-
+    private List<ServerSession> onlineSessionList = new List<ServerSession>();
+    
     public bool Offline(ServerSession ses) {
         bool offlienSuc = true;
         string key1 = "";
-        foreach (var item in onlineStateDic)
+        foreach (var item in onlinePlayerSessionDic)
         {
             if (item.Value == ses) {
                 key1 = item.Key;
             }
         }
-        if (onlineStateDic.ContainsKey(key1))
+        if (onlinePlayerSessionDic.ContainsKey(key1))
         {
-            onlineStateDic.Remove(key1);
+            onlinePlayerSessionDic.Remove(key1);
         }
         else {
             offlienSuc = false;
         }
-        if (playerDataDic.ContainsKey(ses))
+
+        if (onlinePlayerDataDic.ContainsKey(ses))
         {
-            playerDataDic.Remove(ses);
+            onlinePlayerDataDic.Remove(ses);
         }
         else {
             offlienSuc = false;
         }
+
+        if (onlineSessionList.Contains(ses)) {
+            onlineSessionList.Remove(ses);
+        }
+
         return offlienSuc;
     }
 
@@ -70,43 +57,20 @@ public class CacheSvc
     public PlayerData GetPlayerData(string acct, string password) {
         PlayerData data = DBMgr.Instance.QueryPlayerData(acct, password);
         return data;
-    }
+    } 
 
-    /// <summary>
-    /// 玩家上线后缓存数据
-    /// </summary>
-    /// <param name="acct"></param>
-    /// <param name="data"></param>
-    /// <param name="ses"></param>
     public void CachePlayerData(string acct, PlayerData data, ServerSession ses) {
-        if (!onlineStateDic.ContainsKey(acct)) {
-            onlineStateDic.Add(acct, ses);
+        if (!onlinePlayerSessionDic.ContainsKey(acct)) {
+            onlinePlayerSessionDic.Add(acct, ses);
         }
-        if (!playerDataDic.ContainsKey(ses)) {
-            playerDataDic.Add(ses, data);
+        if (!onlinePlayerDataDic.ContainsKey(ses)) {
+            onlinePlayerDataDic.Add(ses, data);
         }
-    }
-
-    public PlayerData GetPlayerDataBySession(ServerSession ses) {
-        PlayerData data = null;
-        if (playerDataDic.TryGetValue(ses, out data)) {
-            return data;
-        }
-        return data;
-    }
-
-    public List<ServerSession> GetOnlineServerSes() {
-        List<ServerSession> _list = new List<ServerSession>();
-        foreach (var key in playerDataDic.Keys)
-        {
-            _list.Add(key);
-        }
-        return _list;
-    }
-
-    /// <summary>
-    /// 检查数据库中是否存在名字
-    /// </summary> 
+        if (!onlineSessionList.Contains(ses)) {
+            onlineSessionList.Add(ses);
+        } 
+    } 
+     
     public bool CheckName(string name) {
         return DBMgr.Instance.CheckName(name);
     }
@@ -116,6 +80,23 @@ public class CacheSvc
         return DBMgr.Instance.UpdatePlayerData(id, data);
     }
 
+    public bool IsOnline(string acct)
+    {
+        return onlinePlayerSessionDic.ContainsKey(acct);
+    } 
 
+    public PlayerData GetPlayerDataBySession(ServerSession ses)
+    {
+        PlayerData data = null;
+        if (onlinePlayerDataDic.TryGetValue(ses, out data))
+        {
+            return data;
+        }
+        return data;
+    }
 
+    public List<ServerSession> GetOnlineServerSes()
+    {
+        return onlineSessionList;
+    } 
 }

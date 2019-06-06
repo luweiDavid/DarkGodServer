@@ -1,5 +1,6 @@
 ﻿
 using System;
+using PENet;
 
 namespace Protocol
 {
@@ -24,11 +25,12 @@ namespace Protocol
         public int GuideID;    //引导id
         public int[] Strong;   //强化系统配置数据
         public int Crystal;     //水晶（可在副本获得）
+        public long Time;      //记录玩家上线的时间（毫秒）
          
 
         public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
             int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical,
-            int guideid, int[] strong, int crystal) {
+            int guideid, int[] strong, int crystal,long time) {
             this.ID = id;
             this.Name = name;
             this.Level = lv;
@@ -47,12 +49,13 @@ namespace Protocol
             this.GuideID = guideid;
             this.Strong = strong;
             this.Crystal = crystal;
+            this.Time = time;
         }
 
         /// <summary>
         /// 默认构造函数对新账号数据进行赋值
         /// </summary>
-        public PlayerData() {
+        public PlayerData(long time) {
             this.ID = -1;
             this.Name = "";
             this.Level = 1;
@@ -71,6 +74,7 @@ namespace Protocol
             this.GuideID = 1001; 
             this.Strong = new int[6]; 
             this.Crystal = 200;
+            this.Time = time;
         }
     }
 }

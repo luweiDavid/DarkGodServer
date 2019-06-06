@@ -5,6 +5,10 @@
 	日期：2019/05/23 16:09   	
 	功能：服务器启动入口
 *****************************************************/
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
 class ServerStart
 {
     static void Main(string[] args)
@@ -12,8 +16,10 @@ class ServerStart
         ServerRoot.Instance.Init();
 
         while (true) {
-            ServerRoot.Instance.Update();
-
+            ServerRoot.Instance.Update(); 
         }
     }
+
+   
 }
+

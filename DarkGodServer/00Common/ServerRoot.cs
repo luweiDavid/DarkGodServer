@@ -6,6 +6,8 @@
 	功能：初始化各个系统
 *****************************************************/
 
+using System;
+
 public class ServerRoot
 {
     private static ServerRoot instance;
@@ -37,13 +39,21 @@ public class ServerRoot
         //业务层
         LoginSys.Instance.Init();
         GuideSys.Instance.Init();
-        
+        PowerSys.Instance.Init();
+        AddTimeAndFrameTask();
     }
 
     public void Update() {
         NetSvc.Instance.Update();
+        TimerSvc.Instance.Update();
     }
 
+    //计时任务统一添加到这里
+    public void AddTimeAndFrameTask() {
+        PowerSys.Instance.AddPowerAddTimeTask();
+
+
+    }
 
     private int SessionID = 0;
     public int GetSessionID() {

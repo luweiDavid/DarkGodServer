@@ -28,11 +28,22 @@ namespace Protocol
         public ReqStrong ReqStrong;
         public RspStrong RspStrong;  
         public SendChatMsg SendChatMsg;
-        public PushChatMsg PushChatMsg;
-
+        public PushChatMsg PushChatMsg; 
         public ReqBuy ReqBuy; 
         public RspBuy RspBuy;
+
+        public NtfPowerChg NtfPowerChg;
     }
+
+    #region power
+    [Serializable]
+    public class NtfPowerChg {
+        public PlayerData data;
+    }
+
+    #endregion
+
+
     #region buy
     [Serializable]
     public class ReqBuy {

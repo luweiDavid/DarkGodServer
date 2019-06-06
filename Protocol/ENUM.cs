@@ -22,17 +22,16 @@ namespace Protocol
         RspLogin = 102,
         ReqRename = 103,
         RspRename = 104, 
+
         ReqGuide = 200,
-        RspGuide = 201,
-
+        RspGuide = 201, 
         ReqStrong=202,
-        RspStrong=203,
-
+        RspStrong=203, 
         SendChatMsg = 204,
-        PushChatMsg = 205,
-
+        PushChatMsg = 205, 
         ReqBuy = 206,
         RspBuy = 207,
+        NtfPowerChg = 208,
     }
 
     [Serializable]

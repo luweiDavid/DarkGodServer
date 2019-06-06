@@ -7,13 +7,13 @@
 	功能：数据库连接管理器，对数据库进行增删改查
 *****************************************************/
 using System;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Protocol;
 
 public class DBMgr
 {
-    public static MySqlConnection conn;
-
+    public static MySqlConnection conn; 
     private static DBMgr instance;
     public static DBMgr Instance {
         get {
@@ -22,8 +22,7 @@ public class DBMgr
             }
             return instance;
         }
-    }
-    
+    } 
     
     public void Init() {
         string conStr = "server=localhost;User Id=root;password=;Database=darkgod";
@@ -41,14 +40,8 @@ public class DBMgr
 
         bool b = CheckName("回复第");
         PECommonTool.Log(b.ToString());
-    }
-
-    /// <summary>
-    /// 查询数据
-    /// </summary>
-    /// <param name="acct"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
+    } 
+     
     public PlayerData QueryPlayerData(string acct,string password) {
         bool isNewAcct = true;
         PlayerData playerData = null;
@@ -84,7 +77,7 @@ public class DBMgr
                     int guideid = reader.GetInt32("guideid");  
                     string strongStr = reader.GetString("strong");
                     int crystal = reader.GetInt32("crystal");
-
+                    long time = reader.GetInt64("time");
 
                     #region  读取拼接的强化数据
                     string[] tmp = strongStr.Split('#');
@@ -99,7 +92,8 @@ public class DBMgr
                     #endregion
 
                     playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
-                        hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid, strong, crystal);
+                        hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid, strong, crystal,
+                        time);
                 }
                 else
                 {
@@ -117,7 +111,8 @@ public class DBMgr
             }
             if (isNewAcct) {
                 //创建新账号
-                playerData = new PlayerData();
+                long time = TimerSvc.Instance.GetNowTime();
+                playerData = new PlayerData(time);
 
                 //插入新账号时，一定要把返回的主键id赋值给playerdata，不然会导致所有的新账号的id都是默认值-1
                 playerData.ID = InsertNewAccount(acct, password, playerData);
@@ -139,7 +134,7 @@ public class DBMgr
             "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
             "pierce = @pierce,critical = @critical, guideid = @guideid, strong = @strong," +
-            "crystal = @crystal";
+            "crystal = @crystal, time = @time";
         int id = -1;
         try
         {
@@ -164,6 +159,7 @@ public class DBMgr
             string str = PECommonTool.GetJointString(data.Strong, '#');
             cmd.Parameters.AddWithValue("strong", str); 
             cmd.Parameters.AddWithValue("crystal", data.Crystal);
+            cmd.Parameters.AddWithValue("time", data.Time);
 
             cmd.ExecuteNonQuery();
              id = (int)cmd.LastInsertedId;
@@ -174,10 +170,7 @@ public class DBMgr
             PECommonTool.Log("InsertNewAccount: " + e.Message, LogType.Error);
         } 
         return id;
-    }
-
-   
-   
+    } 
 
     /// <summary>
     /// 修改数据
@@ -188,7 +181,7 @@ public class DBMgr
         string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
             "pierce = @pierce,critical = @critical, guideid = @guideid,strong = @strong," +
-            "crystal = @crystal where id=@id ";
+            "crystal = @crystal, time = @time where id=@id ";
 
         try
         {
@@ -212,6 +205,7 @@ public class DBMgr
             string str = PECommonTool.GetJointString(data.Strong, '#');
             cmd.Parameters.AddWithValue("strong", str);
             cmd.Parameters.AddWithValue("crystal", data.Crystal);
+            cmd.Parameters.AddWithValue("time", data.Time);
 
             cmd.ExecuteNonQuery();
         }

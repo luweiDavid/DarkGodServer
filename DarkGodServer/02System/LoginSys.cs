@@ -4,7 +4,7 @@
 	作者：David
 	邮箱: 1785275942@qq.com
 	日期：2019/05/23 16:17   	
-	功能：登陆系统层
+	功能：登陆业务系统层
 *****************************************************/
 
 using PENet;
@@ -34,22 +34,46 @@ public class LoginSys:SystemRoot<LoginSys>
         }
         else
         {
-            PlayerData playerData = CacheSvc.Instance.GetPlayerData(acct, password);
-            if (playerData == null)
+            PlayerData pd = CacheSvc.Instance.GetPlayerData(acct, password);  
+            if (pd == null)
             {
                 newMsg.err = (int)ErrorCode.InvalidPassword;
             }
             else {
+                
+                //计算玩家体力恢复
+                long now = TimerSvc.Instance.GetNowTime();
+                int timeInterval = (int)(now - pd.Time);
+
+                int addPower = (timeInterval / (PECommonTool.AddPowerTimeSpan * 1000 * 60)) *
+                    PECommonTool.AddPowerPerTimes;
+                PECommonTool.Log(addPower+ " -- " +"before:  " + pd.Power.ToString(), LogType.Info);
+                
+                if (addPower > 0)
+                {
+                    pd.Power += (int)addPower;
+                    if (pd.Power > PECommonTool.GetPowerLimit(pd.Level)) {
+                        pd.Power = PECommonTool.GetPowerLimit(pd.Level);
+                    }
+                    if (!CacheSvc.Instance.UpdatePlayerDataToDB(pd.ID, pd)) {
+                        PECommonTool.Log("update player time error when login", LogType.Error);
+                    }
+                }
+                PECommonTool.Log("after: "+pd.Power.ToString(), LogType.Info);
+                
+
                 newMsg.RspLogin = new RspLogin
                 {
-                    data = playerData,
+                    data = pd,
                 };
 
-                CacheSvc.Instance.CachePlayerData(acct, playerData, pack.session);
+                CacheSvc.Instance.CachePlayerData(acct, pd, pack.session);
             }
         }
         pack.session.SendMsg(newMsg); 
     }
+
+
 
     /// <summary>
     /// 处理修改名字请求
@@ -85,7 +109,15 @@ public class LoginSys:SystemRoot<LoginSys>
         pack.session.SendMsg(newMsg);
     }
 
-    public void Offline(ServerSession ses, int sesID) {
+    public void Offline(ServerSession ses, int sesID) { 
+        //下线时，先更新下线时间
+        PlayerData pd = CacheSvc.Instance.GetPlayerDataBySession(ses);
+        if (pd != null) {
+            pd.Time = TimerSvc.Instance.GetNowTime();
+            if (!CacheSvc.Instance.UpdatePlayerDataToDB(pd.ID, pd)) {
+                PECommonTool.Log("update player time error when offline", LogType.Error);
+            }
+        }
         bool offlienSuc = CacheSvc.Instance.Offline(ses);
         if (offlienSuc)
         {

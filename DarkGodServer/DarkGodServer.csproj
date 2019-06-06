@@ -43,10 +43,12 @@
     <Compile Include="01Svc\TimerSvc.cs" />
     <Compile Include="02System\ChatSys.cs" />
     <Compile Include="02System\CommonBuySys.cs" />
+    <Compile Include="02System\PowerSys.cs" />
     <Compile Include="02System\StrongSys.cs" />
     <Compile Include="02System\GuideSys.cs" />
     <Compile Include="02System\LoginSys.cs" />
     <Compile Include="02System\SystemRoot.cs" />
+    <Compile Include="01Svc\TimerTool.cs" />
     <Compile Include="03Cache\CacheSvc.cs" />
     <Compile Include="04Database\DBMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
