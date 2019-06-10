@@ -38,9 +38,39 @@ public class DBMgr
             return;
         }
 
-        bool b = CheckName("回复第");
-        PECommonTool.Log(b.ToString());
-    } 
+
+        Test();
+    }
+    private void Test() {
+        PlayerData pd = QueryPlayerData("1", "21");
+        if (pd!= null)
+        {
+            //if (pd.RewardStateList == null)
+            //{
+            //    pd.RewardStateList = new List<TaskRewardState>();
+            //}
+            //if (pd.RewardStateList.Count <= 0)
+            //{
+            //    TaskRewardState rs = new TaskRewardState
+            //    {
+            //        progress = 1,
+            //        state = 33,
+            //    };
+            //    pd.RewardStateList.Add(rs);
+            //    pd.ListCount = pd.RewardStateList.Count;
+            //}
+            //UpdatePlayerData(pd.ID, pd);
+            if (pd.RewardStateList != null)
+            {
+                PECommonTool.Log("00000", LogType.Info);
+                foreach (TaskRewardState item in pd.RewardStateList)
+                {
+                    PECommonTool.Log(item.progress + ">>>>" + item.state);
+                }
+            }
+
+        }
+    }
      
     public PlayerData QueryPlayerData(string acct,string password) {
         bool isNewAcct = true;
@@ -90,10 +120,14 @@ public class DBMgr
                         strong[i] = int.Parse(tmp[i]);
                     }
                     #endregion
+                    byte[] btArr = new byte[374];
+                    reader.GetBytes(reader.GetOrdinal("taskrewardstate"), 0, btArr, 0, 374);
+                    List<TaskRewardState> lst = SerializeMgr.DeserializeBinary<TaskRewardState>(btArr);
 
                     playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
                         hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid, strong, crystal,
                         time);
+                    playerData.RewardStateList = lst;
                 }
                 else
                 {
@@ -181,7 +215,7 @@ public class DBMgr
         string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
             "pierce = @pierce,critical = @critical, guideid = @guideid,strong = @strong," +
-            "crystal = @crystal, time = @time where id=@id ";
+            "crystal = @crystal, time = @time, taskrewardstate = @taskrewardstate where id=@id ";
 
         try
         {
@@ -206,6 +240,9 @@ public class DBMgr
             cmd.Parameters.AddWithValue("strong", str);
             cmd.Parameters.AddWithValue("crystal", data.Crystal);
             cmd.Parameters.AddWithValue("time", data.Time);
+             
+            byte[] btArr = SerializeMgr.BinarySerialize(data.RewardStateList);
+            cmd.Parameters.AddWithValue("taskrewardstate", btArr);
 
             cmd.ExecuteNonQuery();
         }

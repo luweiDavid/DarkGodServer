@@ -29,7 +29,7 @@ public class StrongSys : SystemRoot<StrongSys>
         PlayerData pd = CacheSvc.Instance.GetPlayerDataBySession(pack.session); 
         int curStarLv = pd.Strong[pos];
 
-        CfgStrongData nextCfg = CfgSvc.Instance.GetStrongData(pos, curStarLv + 1);
+        CfgStrong nextCfg = CfgSvc.Instance.GetStrongCfg(pos, curStarLv + 1);
         if (nextCfg != null)
         { 
             if (pd.Coin < nextCfg.coin)

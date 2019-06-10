@@ -16,35 +16,31 @@ public class CfgSvc : ServiceRoot<CfgSvc>
     {
         base.Init();
 
+        InitTaskRewardCfg();
         InitGuideCfg();
-        InitStrongCfg();
+        InitStrongCfg(); 
     }
 
-    #region
-    public CfgStrongData GetStrongData(int pos, int starLv)
+
+    #region taskreward
+    public CfgTaskReward GetTaskRewardCfg(int id) {
+        CfgTaskReward cfg = null;
+        taskrewardDic.TryGetValue(id, out cfg);
+
+        return cfg;
+    }
+
+    private Dictionary<int, CfgTaskReward> taskrewardDic = new Dictionary<int, CfgTaskReward>();
+    private void InitTaskRewardCfg()
     {
-        CfgStrongData data = null;
-        Dictionary<int, CfgStrongData> dataDic = null;
-        if (strongDataDic.TryGetValue(pos, out dataDic))
-        {
-            if (dataDic != null && dataDic.TryGetValue(starLv, out data))
-            {
-                return data;
-            }
-        }
-        return null;
-    }
-
-    private Dictionary<int, Dictionary<int, CfgStrongData>> strongDataDic = new Dictionary<int, Dictionary<int, CfgStrongData>>();
-    private void InitStrongCfg()
-    { 
         XmlDocument xmlDoc = new XmlDocument();
-        string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\strong.xml";
-        string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\strong.xml";
+        string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\taskreward.xml";
+        string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\taskreward.xml";
+
         xmlDoc.Load(inHaoXinStr);
 
         XmlNodeList nodeList = xmlDoc.SelectSingleNode("root").ChildNodes;
-        Dictionary<int, CfgStrongData> dataDic = null;
+
         for (int i = 0; i < nodeList.Count; i++)
         {
             XmlElement ele = nodeList[i] as XmlElement;
@@ -53,7 +49,68 @@ public class CfgSvc : ServiceRoot<CfgSvc>
                 continue;
             }
             int ID = Convert.ToInt32(ele.GetAttribute("ID"));
-            CfgStrongData cfg = new CfgStrongData
+
+            CfgTaskReward cfg = new CfgTaskReward
+            {
+                ID = ID,
+            };
+
+            foreach (XmlElement subEle in nodeList[i].ChildNodes)
+            {
+                string str = subEle.Name;
+                switch (str)
+                {
+                    case "count":
+                        cfg.count = int.Parse(subEle.InnerText);
+                        break;
+                    case "exp":
+                        cfg.exp = int.Parse(subEle.InnerText);
+                        break;
+                    case "coin":
+                        cfg.coin = int.Parse(subEle.InnerText);
+                        break; 
+                }
+            }
+            taskrewardDic.Add(cfg.ID, cfg);
+        }
+    }
+    #endregion
+
+
+    #region strong 
+    public CfgStrong GetStrongCfg(int pos, int starLv)
+    {
+        CfgStrong cfg = null;
+        Dictionary<int, CfgStrong> cfgDic = null;
+        if (strongDic.TryGetValue(pos, out cfgDic))
+        {
+            if (cfgDic != null && cfgDic.TryGetValue(starLv, out cfg))
+            {
+                return cfg;
+            }
+        }
+        return null;
+    }
+
+    private Dictionary<int, Dictionary<int, CfgStrong>> strongDic = new Dictionary<int, Dictionary<int, CfgStrong>>();
+    private void InitStrongCfg()
+    { 
+        XmlDocument xmlDoc = new XmlDocument();
+        string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\strong.xml";
+        string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\strong.xml";
+        xmlDoc.Load(inHaoXinStr);
+
+        XmlNodeList nodeList = xmlDoc.SelectSingleNode("root").ChildNodes;
+        Dictionary<int, CfgStrong> cfgDic = null;
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            XmlElement ele = nodeList[i] as XmlElement;
+            if (ele.GetAttribute("ID") == null)
+            {
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttribute("ID"));
+            CfgStrong cfg = new CfgStrong
             {
                 ID = ID,
             };
@@ -90,15 +147,15 @@ public class CfgSvc : ServiceRoot<CfgSvc>
                 }
             }
 
-            if (strongDataDic.ContainsKey(cfg.pos))
+            if (strongDic.ContainsKey(cfg.pos))
             {
-                dataDic.Add(cfg.starLv, cfg);
+                cfgDic.Add(cfg.starLv, cfg);
             }
             else
             {
-                dataDic = new Dictionary<int, CfgStrongData>();
-                dataDic.Add(cfg.starLv, cfg);
-                strongDataDic.Add(cfg.pos, dataDic);
+                cfgDic = new Dictionary<int, CfgStrong>();
+                cfgDic.Add(cfg.starLv, cfg);
+                strongDic.Add(cfg.pos, cfgDic);
             }
         }
     } 
@@ -106,14 +163,14 @@ public class CfgSvc : ServiceRoot<CfgSvc>
 
 
     #region   引导配置表读取
-    public CfgGuideData GetGuideData(int id)
+    public CfgGuide GetGuideCfg(int id)
     {
-        CfgGuideData cfg = null;
-        guideDataDic.TryGetValue(id, out cfg);
+        CfgGuide cfg = null;
+        guideDic.TryGetValue(id, out cfg);
         return cfg;
     }
 
-    private Dictionary<int, CfgGuideData> guideDataDic = new Dictionary<int, CfgGuideData>();
+    private Dictionary<int, CfgGuide> guideDic = new Dictionary<int, CfgGuide>();
 
     private void InitGuideCfg() {
         XmlDocument xmlDoc = new XmlDocument();
@@ -132,7 +189,7 @@ public class CfgSvc : ServiceRoot<CfgSvc>
                 continue;
             }
             int ID = Convert.ToInt32(ele.GetAttribute("ID"));
-            CfgGuideData cfg = new CfgGuideData();
+            CfgGuide cfg = new CfgGuide();
             cfg.ID = ID;
 
             foreach (XmlElement subEle in nodeList[i].ChildNodes)
@@ -155,7 +212,7 @@ public class CfgSvc : ServiceRoot<CfgSvc>
                 }
             }
 
-            guideDataDic.Add(ID, cfg);
+            guideDic.Add(ID, cfg);
         }
     }
 

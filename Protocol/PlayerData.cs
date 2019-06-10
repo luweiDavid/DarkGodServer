@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using PENet;
 
 namespace Protocol
@@ -26,6 +27,8 @@ namespace Protocol
         public int[] Strong;   //强化系统配置数据
         public int Crystal;     //水晶（可在副本获得）
         public long Time;      //记录玩家上线的时间（毫秒）
+        public List<TaskRewardState> RewardStateList;
+        public int ListCount = 0;
          
 
         public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
@@ -75,6 +78,8 @@ namespace Protocol
             this.Strong = new int[6]; 
             this.Crystal = 200;
             this.Time = time;
+            this.RewardStateList = new List<TaskRewardState>();
+            ListCount = 0;
         }
     }
 }

@@ -7,12 +7,19 @@
 *****************************************************/
 
 
-public class BaseCfgData<T>
+public class BaseCfg<T>
 {
     public int ID;
 }
 
-public class CfgStrongData : BaseCfgData<CfgStrongData>
+
+public class CfgTaskReward : BaseCfg<CfgTaskReward> {
+    public int count;
+    public int exp;
+    public int coin;
+}
+
+public class CfgStrong : BaseCfg<CfgStrong>
 {
     public int pos;
     public int starLv;
@@ -25,7 +32,7 @@ public class CfgStrongData : BaseCfgData<CfgStrongData>
 
 }
 
-public class CfgGuideData : BaseCfgData<CfgGuideData>
+public class CfgGuide : BaseCfg<CfgGuide>
 {
     public int npcID;
     public string dilogArr;

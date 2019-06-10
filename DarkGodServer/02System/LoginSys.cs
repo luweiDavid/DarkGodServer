@@ -46,8 +46,7 @@ public class LoginSys:SystemRoot<LoginSys>
                 int timeInterval = (int)(now - pd.Time);
 
                 int addPower = (timeInterval / (PECommonTool.AddPowerTimeSpan * 1000 * 60)) *
-                    PECommonTool.AddPowerPerTimes;
-                PECommonTool.Log(addPower+ " -- " +"before:  " + pd.Power.ToString(), LogType.Info);
+                    PECommonTool.AddPowerPerTimes; 
                 
                 if (addPower > 0)
                 {
@@ -58,8 +57,7 @@ public class LoginSys:SystemRoot<LoginSys>
                     if (!CacheSvc.Instance.UpdatePlayerDataToDB(pd.ID, pd)) {
                         PECommonTool.Log("update player time error when login", LogType.Error);
                     }
-                }
-                PECommonTool.Log("after: "+pd.Power.ToString(), LogType.Info);
+                } 
                 
 
                 newMsg.RspLogin = new RspLogin

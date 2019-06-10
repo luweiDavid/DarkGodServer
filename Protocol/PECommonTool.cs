@@ -85,4 +85,6 @@ public class PECommonTool
     public const int AddPowerTimeSpan = 5;  //恢复体力时间间隔（分钟）
     public const int AddPowerPerTimes = 3;  //每次恢复的体力值
 
+
+
 }

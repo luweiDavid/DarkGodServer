@@ -37,6 +37,8 @@
     <Compile Include="PECommonTool.cs" />
     <Compile Include="PlayerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializeMgr.cs" />
+    <Compile Include="TaskRewardState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PESocket, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

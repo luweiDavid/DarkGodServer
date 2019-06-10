@@ -32,7 +32,7 @@ public class GuideSys:SystemRoot<GuideSys>
             newMsg.err = (int)ErrorCode.ServerDataError;
         }
         else { 
-            CfgGuideData cfg = CfgSvc.Instance.GetGuideData(reqData.guideId);
+            CfgGuide cfg = CfgSvc.Instance.GetGuideCfg(reqData.guideId);
             if (cfg != null) {
                 //更新数据（缓存和数据库）
                 pd.GuideID += 1;
