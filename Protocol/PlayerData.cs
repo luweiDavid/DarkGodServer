@@ -27,13 +27,12 @@ namespace Protocol
         public int[] Strong;   //强化系统配置数据
         public int Crystal;     //水晶（可在副本获得）
         public long Time;      //记录玩家上线的时间（毫秒）
-        public List<TaskRewardState> RewardStateList;
-        public int ListCount = 0;
+        public int FuBenId;
          
 
         public PlayerData(int id, string name, int lv, int exp, int power, int coin, int diamond,
             int hp, int ad, int ap, int addef, int apdef, int dodge, int pierce, int critical,
-            int guideid, int[] strong, int crystal,long time) {
+            int guideid, int[] strong, int crystal,long time,int fbid) {
             this.ID = id;
             this.Name = name;
             this.Level = lv;
@@ -53,6 +52,7 @@ namespace Protocol
             this.Strong = strong;
             this.Crystal = crystal;
             this.Time = time;
+            this.FuBenId = fbid;
         }
 
         /// <summary>
@@ -78,8 +78,7 @@ namespace Protocol
             this.Strong = new int[6]; 
             this.Crystal = 200;
             this.Time = time;
-            this.RewardStateList = new List<TaskRewardState>();
-            ListCount = 0;
+            this.FuBenId = 10001;
         }
     }
 }

@@ -18,8 +18,60 @@ public class CfgSvc : ServiceRoot<CfgSvc>
 
         InitTaskRewardCfg();
         InitGuideCfg();
-        InitStrongCfg(); 
+        InitStrongCfg();
+        InitMapCfg();
     }
+
+
+    #region map
+    public CfgMap GetCfgMap(int mapID)
+    {
+        CfgMap cfg = null;
+        mapCfgDic.TryGetValue(mapID, out cfg);
+        return cfg;
+    }
+
+    private Dictionary<int, CfgMap> mapCfgDic = new Dictionary<int, CfgMap>();
+
+    private void InitMapCfg()
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        string inHaoXinStr = @"G:\Homework\DarkGod\Assets\Resources\Configs\map_v1.xml";
+        string inHomeStr = @"E:\UnityPorjects\DarkGod\Assets\Resources\Configs\map_v1.xml";
+
+        xmlDoc.Load(inHaoXinStr);
+
+        XmlNodeList nodeList = xmlDoc.SelectSingleNode("root").ChildNodes;
+
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            XmlElement ele = nodeList[i] as XmlElement;
+            if (ele.GetAttribute("ID") == null)
+            {
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttribute("ID"));
+
+            CfgMap cfg = new CfgMap
+            {
+                ID = ID,
+            };
+
+            foreach (XmlElement subEle in nodeList[i].ChildNodes)
+            {
+                string str = subEle.Name;
+                switch (str)
+                {
+                    case "Power":
+                        cfg.power = int.Parse(subEle.InnerText);
+                        break; 
+                }
+            }
+            mapCfgDic.Add(cfg.ID, cfg);
+        }
+    }
+
+    #endregion
 
 
     #region taskreward

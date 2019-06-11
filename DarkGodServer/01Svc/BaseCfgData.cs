@@ -19,6 +19,11 @@ public class CfgTaskReward : BaseCfg<CfgTaskReward> {
     public int coin;
 }
 
+public class CfgMap : BaseCfg<CfgMap>
+{ 
+    public int power;  
+}
+
 public class CfgStrong : BaseCfg<CfgStrong>
 {
     public int pos;

@@ -36,23 +36,28 @@ namespace Protocol
         }
 
 
-        public static List<T> DeserializeBinary<T>(byte[] rawData) {
+        public static T[] DeserializeBinary<T>(byte[] rawData) {
             MemoryStream ms = null;
-            List<T> _list = null;
+            T[] arr = null;
+            PECommonTool.Log("===DeserializeBinary====  " + rawData.Length);
             try
             {
-                BinaryFormatter bFormatter = new BinaryFormatter(); 
+                BinaryFormatter bFormatter = new BinaryFormatter();
                 ms = new MemoryStream(rawData);
                 ms.Position = 0;
-                _list = (List<T>)bFormatter.Deserialize(ms);
-
-                ms.Dispose();
+                arr = (T[])bFormatter.Deserialize(ms);
             }
             catch (System.Exception e)
-            { 
+            {
                 PECommonTool.Log("deserialize failed :" + e.Message);
-            } 
-            return _list;
+            }
+            finally {
+                if (ms != null) {
+                    ms.Dispose();
+                }
+            }
+           
+            return arr;
         }
     }
 }

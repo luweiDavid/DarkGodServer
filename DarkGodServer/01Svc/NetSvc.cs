@@ -64,6 +64,9 @@ public class NetSvc:ServiceRoot<NetSvc>
                 break;
             case MsgType.ReqBuy:
                 CommonBuySys.Instance.HandleReqBuy(pack);
+                break; 
+            case MsgType.ReqFuBen:
+                FuBenSys.Instance.HandleReqFuBen(pack);
                 break;
         }
     } 

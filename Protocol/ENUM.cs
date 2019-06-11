@@ -32,6 +32,9 @@ namespace Protocol
         ReqBuy = 206,
         RspBuy = 207,
         NtfPowerChg = 208,
+
+        ReqFuBen = 301,
+        RspFuBen = 302,
     }
 
     [Serializable]
@@ -46,7 +49,9 @@ namespace Protocol
         LackCrystal,
         LackCoin,
         LackDiamond,
+        LackPower,
         GetCfgError,
+        ClientDataError,
     }
 
     public enum CommonBuyType

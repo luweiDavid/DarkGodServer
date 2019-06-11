@@ -36,42 +36,40 @@ public class DBMgr
         {
             PECommonTool.Log("数据库连接失败：" + e.Message, LogType.Error);
             return;
-        }
-
-
-        Test();
+        } 
     }
+
+    #region  测试代码
     private void Test() {
         PlayerData pd = QueryPlayerData("1", "21");
         if (pd!= null)
         {
-            //if (pd.RewardStateList == null)
+            //if (pd.RewardStateArr == null)
             //{
-            //    pd.RewardStateList = new List<TaskRewardState>();
+            //    pd.RewardStateArr = new TaskRewardState[6];
             //}
-            //if (pd.RewardStateList.Count <= 0)
+            //else
             //{
             //    TaskRewardState rs = new TaskRewardState
             //    {
             //        progress = 1,
             //        state = 33,
             //    };
-            //    pd.RewardStateList.Add(rs);
-            //    pd.ListCount = pd.RewardStateList.Count;
+            //    PECommonTool.Log("++update++");
+            //    pd.RewardStateArr[0] = rs; 
             //}
             //UpdatePlayerData(pd.ID, pd);
-            if (pd.RewardStateList != null)
-            {
-                PECommonTool.Log("00000", LogType.Info);
-                foreach (TaskRewardState item in pd.RewardStateList)
-                {
-                    PECommonTool.Log(item.progress + ">>>>" + item.state);
-                }
-            }
 
+
+            //for (int i = 0; i < pd.RewardStateArr.Length; i++)
+            //{
+            //    PECommonTool.Log(pd.RewardStateArr[i].progress + "+++++++++" + pd.RewardStateArr[i].state);
+            //}
         }
+
+        #endregion
     }
-     
+
     public PlayerData QueryPlayerData(string acct,string password) {
         bool isNewAcct = true;
         PlayerData playerData = null;
@@ -106,8 +104,10 @@ public class DBMgr
                     int critical = reader.GetInt32("critical");
                     int guideid = reader.GetInt32("guideid");  
                     string strongStr = reader.GetString("strong");
-                    int crystal = reader.GetInt32("crystal");
+                    int crystal = reader.GetInt32("crystal"); 
                     long time = reader.GetInt64("time");
+                    int fbid = reader.GetInt32("fubenid");
+
 
                     #region  读取拼接的强化数据
                     string[] tmp = strongStr.Split('#');
@@ -120,14 +120,21 @@ public class DBMgr
                         strong[i] = int.Parse(tmp[i]);
                     }
                     #endregion
-                    byte[] btArr = new byte[374];
-                    reader.GetBytes(reader.GetOrdinal("taskrewardstate"), 0, btArr, 0, 374);
-                    List<TaskRewardState> lst = SerializeMgr.DeserializeBinary<TaskRewardState>(btArr);
-
+                    
+                    
                     playerData = new PlayerData(id, name, level, exp, power, coin, diamond,
                         hp, ad, ap, addef, apdef, dodge, pierce, critical, guideid, strong, crystal,
-                        time);
-                    playerData.RewardStateList = lst;
+                        time, fbid);
+
+
+
+                    #region  测试代码
+                    //byte[] btArr = new byte[124];
+                    //reader.GetBytes(reader.GetOrdinal("taskrewardstate"), 0, btArr, 0, 124);
+                    //TaskRewardState[] arr = SerializeMgr.DeserializeBinary<TaskRewardState>(btArr);
+                    //playerData.RewardStateArr = arr;
+
+                    #endregion
                 }
                 else
                 {
@@ -168,7 +175,7 @@ public class DBMgr
             "@name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
             "pierce = @pierce,critical = @critical, guideid = @guideid, strong = @strong," +
-            "crystal = @crystal, time = @time";
+            "crystal = @crystal, time = @time, fubenid = @fubenid";
         int id = -1;
         try
         {
@@ -194,6 +201,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("strong", str); 
             cmd.Parameters.AddWithValue("crystal", data.Crystal);
             cmd.Parameters.AddWithValue("time", data.Time);
+            cmd.Parameters.AddWithValue("fubenid", data.FuBenId);
 
             cmd.ExecuteNonQuery();
              id = (int)cmd.LastInsertedId;
@@ -215,7 +223,7 @@ public class DBMgr
         string quest = "update account set name = @name,level = @level,exp = @exp,power = @power,coin = @coin,diamond = @diamond," +
             "hp = @hp,ad = @ad,ap = @ap,addef = @addef,apdef = @apdef,dodge = @dodge," +
             "pierce = @pierce,critical = @critical, guideid = @guideid,strong = @strong," +
-            "crystal = @crystal, time = @time, taskrewardstate = @taskrewardstate where id=@id ";
+            "crystal = @crystal, time = @time, fubenid = @fubenid where id=@id ";
 
         try
         {
@@ -239,10 +247,8 @@ public class DBMgr
             string str = PECommonTool.GetJointString(data.Strong, '#');
             cmd.Parameters.AddWithValue("strong", str);
             cmd.Parameters.AddWithValue("crystal", data.Crystal);
-            cmd.Parameters.AddWithValue("time", data.Time);
-             
-            byte[] btArr = SerializeMgr.BinarySerialize(data.RewardStateList);
-            cmd.Parameters.AddWithValue("taskrewardstate", btArr);
+            cmd.Parameters.AddWithValue("time", data.Time); 
+            cmd.Parameters.AddWithValue("fubenid", data.FuBenId); 
 
             cmd.ExecuteNonQuery();
         }

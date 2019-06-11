@@ -43,6 +43,7 @@
     <Compile Include="01Svc\TimerSvc.cs" />
     <Compile Include="02System\ChatSys.cs" />
     <Compile Include="02System\CommonBuySys.cs" />
+    <Compile Include="02System\FuBenSys.cs" />
     <Compile Include="02System\PowerSys.cs" />
     <Compile Include="02System\StrongSys.cs" />
     <Compile Include="02System\GuideSys.cs" />

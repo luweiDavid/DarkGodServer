@@ -30,10 +30,25 @@ namespace Protocol
         public SendChatMsg SendChatMsg;
         public PushChatMsg PushChatMsg; 
         public ReqBuy ReqBuy; 
-        public RspBuy RspBuy;
-
+        public RspBuy RspBuy; 
         public NtfPowerChg NtfPowerChg;
+
+        public ReqFuBen ReqFuBen;
+        public RspFuBen RspFuBen;
     }
+
+    #region fuben
+    [Serializable]
+    public class ReqFuBen {
+        public int fubenID;
+    }
+    [Serializable]
+    public class RspFuBen {
+        public int fubenID;
+        public PlayerData pd;
+    }
+        
+    #endregion
 
     #region power
     [Serializable]
@@ -42,8 +57,7 @@ namespace Protocol
     }
 
     #endregion
-
-
+     
     #region buy
     [Serializable]
     public class ReqBuy {
